@@ -1,0 +1,576 @@
+/* Reset default margins/padding */
+body {
+  background-color: #060606;
+background-image: 
+    /* Tiny grid (1px = finest detail) */
+    linear-gradient(rgba(55, 55, 55, 0.1) 0.5px, transparent 0.5px),
+    linear-gradient(90deg, rgba(55, 55, 55, 0.1) 0.5px, transparent 0.5px),
+    /* Small grid (every 10px) */
+    linear-gradient(rgba(75, 75, 75, 0.15) 0.7px, transparent 0.7px),
+    linear-gradient(90deg, rgba(75, 75, 75, 0.15) 0.7px, transparent 0.7px),
+    /* Medium grid (every 50px) */
+    linear-gradient(rgba(100, 100, 100, 0.2) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(100, 100, 100, 0.2) 1px, transparent 1px),
+    /* Large grid (every 100px) */
+    linear-gradient(rgba(120, 120, 120, 0.3) 1.2px, transparent 1.2px),
+    linear-gradient(90deg, rgba(120, 120, 120, 0.3) 1.2px, transparent 1.2px),
+    /* Radial gradient (depth effect) */
+    radial-gradient(circle at 50% 50%, rgba(40, 40, 40, 0.2) 0%, transparent 70%);
+background-size: 
+    5px 5px,     /* Tiny grid (1px subdivisions) */
+    5px 5px,
+    10px 10px,   /* Small grid */
+    10px 10px,
+    50px 50px,    /* Medium grid */
+    50px 50px,
+    100px 100px,  /* Large grid */
+    100px 100px,
+    100% 100%;
+  cursor: none;
+  overflow-x: hidden;
+  
+}
+body, nav {
+  margin: 0;
+  padding: 0;
+}
+
+
+.custom-cursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: white;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  transform: translate(-50%, -50%);
+  transition: 
+    transform 0.2s ease,
+    width 0.2s ease,
+    height 0.2s ease;
+  z-index: 9999;
+}
+
+/* Cursor grow effect when hovering interactive elements */
+.hover-effect {
+  width: 30px;
+  height: 30px;
+}
+
+
+
+* {
+  box-sizing: border-box;
+  /* cursor: none !important; */
+}
+
+/* Main Navbar Styles */
+.navbar {
+  
+  color: #fff;
+  padding: 1rem 2rem;
+  /* position: fixed; */
+  width: 100vw;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Time Display */
+.navbar-brand .local-time {
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+/* Contact Button Styles */
+.contact-button {
+  position: relative;
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  border: 1px solid #fff;
+  background-color: #000;
+  border-radius: 25px; /* Rounded corners */
+  overflow: hidden;
+  text-decoration: none;
+  transition: color 0.3s 0.1s;
+}
+
+.button-text {
+  position: relative;
+  z-index: 2;
+  font-family: 'Arial', sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  /* background-color: #000; */
+  color: #fff;
+}
+
+.button-hover {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  transition: left 0.4s cubic-bezier(0.8, 0, 0.2, 1);
+  z-index: 1;
+  border-radius: 24px; /* Match parent border-radius */
+}
+
+.contact-button:hover .button-hover {
+  left: 0;
+}
+
+.contact-button:hover .button-text {
+  color: #000;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 1rem;
+  }
+  
+  .contact-button {
+    padding: 0.4rem 1.2rem;
+  }
+}
+
+.full-width-container {
+  width: 100vw;
+  margin-top: 0;
+  overflow: hidden;
+  background-color: transparent;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 10vh;
+}
+
+.full-width-name {
+  font-family: 'Helvetica', Arial, sans-serif;
+  font-weight: bold;
+  font-size: 10vw;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  margin: 0;
+  padding: 0.3em 0 0 0;
+  width: 100%;
+  text-align: center;
+  position: relative;
+}
+
+.name-letter {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.name-letter:hover {
+  transform: translateY(-40px);
+}
+
+.down-arrow {
+  margin-top: 2rem;
+  cursor: pointer;
+  color: white;
+  transition: all 0.3s ease;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.down-arrow:hover {
+  color: black;
+  background-color: white;
+}
+
+.down-arrow svg {
+  width: 24px;
+  height: 24px;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+.down-arrow {
+  animation: bounce 2s infinite;
+}
+
+/* New Interactive Button Styles */
+.explore-btn {
+  position: relative;
+  margin-top: 3rem;
+  padding: 15px 40px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  background-color: black;
+  border: 1px solid white;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.explore-btn:hover {
+  color: black;
+  background-color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.btn-text {
+  transition: transform 0.3s ease;
+}
+
+.arrow-container {
+  position: relative;
+  width: 24px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+}
+
+.arrow-tail {
+  position: absolute;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: currentColor;
+  transition: all 0.3s ease;
+}
+
+.arrow-head {
+  width: 12px;
+  height: 12px;
+  transition: all 0.3s ease;
+}
+
+.explore-btn:hover .arrow-tail {
+  width: 16px;
+}
+
+.explore-btn:hover .arrow-head {
+  transform: translateX(16px);
+}
+
+.explore-btn:active {
+  transform: translateY(1px);
+}
+
+/* About.css - Minimal Stacked Layout */
+.about-container {
+  max-width: 1200px;
+  margin:33vh auto;
+  padding: 0 1rem;
+  color: #ffffff;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.heading-stack {
+  margin: 0 0 2rem 0;
+  padding: 0;
+}
+
+.about-heading {
+  font-size: clamp(2rem, 8vw, 3.5rem);
+  font-weight: bold;
+  line-height: 1;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+
+.about-heading:not(:first-child) {
+  margin-top: -0.2em;
+}
+
+.about-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: 3rem 0;
+}
+
+.about-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.section-content {
+  flex: 1;
+  max-width: 800px;
+}
+
+.bullet-points {
+  font-size: 1.2rem;
+  letter-spacing: 0.3rem;
+  padding-top: 0.5rem;
+  margin-left: 1rem;
+}
+
+.about-section h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.05rem;
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+
+.about-section p {
+  font-size: 1rem;
+  line-height: 1.6;
+  font-weight: 300;
+  opacity: 0.9;
+}
+
+.about-footer {
+  margin: 4rem 0 0 0;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 800px;
+}
+
+.about-footer p {
+  font-size: 1rem;
+  line-height: 1.6;
+  font-weight: 300;
+  font-style: italic;
+  opacity: 0.8;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .about-container {
+    padding: 0 0.8rem;
+  }
+  
+  .about-heading {
+    font-size: clamp(1.8rem, 10vw, 2.5rem);
+    letter-spacing: -0.01em;
+  }
+  
+  .about-sections {
+    margin: 2rem 0;
+    gap: 1.5rem;
+  }
+  
+  .about-section {
+    flex-direction: column-reverse;
+    gap: 0.5rem;
+  }
+  
+  .bullet-points {
+    margin-left: 0;
+    padding-top: 0;
+    margin-bottom: 0.5rem;
+    align-self: flex-end;
+  }
+  
+  .about-footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-container {
+    padding: 0 0.6rem;
+  }
+  
+  .about-heading {
+    line-height: 1.1;
+  }
+  
+  .about-section h2 {
+    font-size: 1rem;
+  }
+  
+  .about-section p,
+  .about-footer p {
+    font-size: 0.9rem;
+  }
+}
+
+/* Projects.css - Bento Grid Matching About Page Styling */
+.projects-container {
+  padding: 0 0.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: 'Helvetica, Arial, sans-serif';
+  color: white;
+}
+
+.projects-heading {
+  font-size: 2.5rem;
+  margin: 0.5rem 0 1rem 0.25rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.project-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.project-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.project-card p {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  line-height: 1.4;
+  margin-bottom: 0.8rem;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.project-tags span {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.6rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Size Classes */
+.large {
+  grid-column: span 2;
+  grid-row: span 1;
+}
+
+.medium {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+
+.small {
+  grid-column: span 1;
+  grid-row: span 1;
+  min-height: 120px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .projects-container {
+    padding: 0 0.3rem;
+  }
+  
+  .projects-heading {
+    font-size: 1.8rem;
+    margin: 0.3rem 0 0.8rem 0.2rem;
+  }
+  
+  .bento-grid {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+  
+  .large, .medium, .small {
+    grid-column: span 1;
+  }
+  
+  .project-card {
+    padding: 0.8rem;
+  }
+  
+  .project-card h3 {
+    font-size: 1rem;
+  }
+  
+  .project-card p {
+    font-size: 0.8rem;
+  }
+  
+  .project-tags span {
+    font-size: 0.6rem;
+    padding: 0.15rem 0.5rem;
+  }
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Optional: Improve scroll smoothness */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Prevent layout shifts */
+.smooth-scroll-container {
+  overflow-anchor: none;
+}
+
+/* Optional: Custom scrollbar (lightweight) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+  background: #ffffff30;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ffffff50;
+}

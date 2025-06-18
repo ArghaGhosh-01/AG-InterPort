@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@800&display=swap" rel="stylesheet">
+    <title>Vite + React</title>
+  </head>
+  <body class="body">
+    <div class="custom-cursor"></div>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const cursor = document.querySelector('.custom-cursor');
+        
+        // Track mouse movement
+        document.addEventListener('mousemove', (e) => {
+          cursor.style.left = `${e.clientX}px`;
+          cursor.style.top = `${e.clientY}px`;
+        });
+  
+        // Add hover effect to all interactive elements
+        const interactiveElements = [
+          'a', 'button', 'input', 'textarea', 
+          'select', '[role="button"]', '.box'
+        ];
+        
+        const hoverElements = document.querySelectorAll(interactiveElements.join(','));
+        
+        hoverElements.forEach(el => {
+          el.addEventListener('mouseenter', () => {
+            cursor.classList.add('hover-effect');
+          });
+          
+          el.addEventListener('mouseleave', () => {
+            cursor.classList.remove('hover-effect');
+          });
+        });
+  
+        // Hide cursor when mouse leaves window
+        document.addEventListener('mouseout', () => {
+          cursor.style.opacity = '0';
+        });
+  
+        // Show cursor when mouse returns
+        document.addEventListener('mouseover', () => {
+          cursor.style.opacity = '1';
+        });
+      });
+    </script>
+  
+  </body>
+</html>

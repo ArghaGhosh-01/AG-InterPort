@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Logo from '../Images/logo.png';
-import { LOD } from 'three';
+// import { LOD } from 'three';
 
 const Navbar = () => {
   const [currentTime, setCurrentTime] = useState('');

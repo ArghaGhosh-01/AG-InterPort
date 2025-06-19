@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import Logo from '../Images/logo.png';
+import { LOD } from 'three';
 
 const Navbar = () => {
   const [currentTime, setCurrentTime] = useState('');
@@ -24,7 +26,13 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-container">
         <div className="navbar-brand">
-          <span className="local-time">LOCAL / {currentTime}</span>
+        <img 
+            src={Logo} 
+            alt="Logo" 
+            className="local-time" 
+            style={{marginLeft:'10px', marginRight: '10px', height: '20px' }}
+          />
+          {/* <span className="local-time">LOCAL/{currentTime}</span> */}
         </div>
         
         <div className="navbar-contact">

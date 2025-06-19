@@ -3,39 +3,36 @@ import React, { useState, useEffect, useRef } from 'react';
 const FullWidthName = () => {
   const [displayContent, setDisplayContent] = useState([]);
   const fullText = "ARGHA GHOSH";
-  const typingSpeed = 100;
+  const animationDelay = 100; // Delay between each character animation
   const exploreBtnRef = useRef(null);
   const btnTextRef = useRef(null);
   const arrowContainerRef = useRef(null);
 
   useEffect(() => {
-    let currentIndex = 0;
-    const typingInterval = setInterval(() => {
-      if (currentIndex <= fullText.length) {
-        const content = [];
-        const currentText = fullText.substring(0, currentIndex);
-        
-        for (let i = 0; i < currentText.length; i++) {
-          const char = currentText[i];
-          if (char === ' ') {
-            content.push(' ');
-          } else {
-            content.push(
-              <span key={`char-${i}`} className="name-letter">
-                {char}
-              </span>
-            );
-          }
-        }
-        
-        setDisplayContent(content);
-        currentIndex++;
+    const content = [];
+    
+    for (let i = 0; i < fullText.length; i++) {
+      const char = fullText[i];
+      if (char === ' ') {
+        content.push(' ');
       } else {
-        clearInterval(typingInterval);
+        content.push(
+          <span 
+            key={`char-${i}`} 
+            className="name-letter"
+            style={{
+              animationDelay: `${i * animationDelay}ms`,
+              opacity: 0, // Start invisible, animation will make it appear
+              display: 'inline-block'
+            }}
+          >
+            {char}
+          </span>
+        );
       }
-    }, typingSpeed);
-
-    return () => clearInterval(typingInterval);
+    }
+    
+    setDisplayContent(content);
   }, []);
 
   useEffect(() => {
@@ -127,6 +124,7 @@ const FullWidthName = () => {
           overflow: hidden;
           background-color: transparent;
           position: relative;
+          z-index: 100;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -151,7 +149,19 @@ const FullWidthName = () => {
 
         .name-letter {
           display: inline-block;
-          transition: transform 0.2s ease;
+          transform: translateY(20px);
+          animation: letterAppear 0.6s ease forwards;
+        }
+
+        @keyframes letterAppear {
+          0% {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
 
         .name-letter:hover {

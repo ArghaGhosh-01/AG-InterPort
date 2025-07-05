@@ -21,11 +21,15 @@ const Navbar = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const handleContactClick = () => {
+    window.location.href = 'mailto:argha7417@gmail.com';
+  };
+
   return (
     <nav className="navbar">
       <div className="navbar-container">
         <div className="navbar-brand">
-        <img 
+          <img 
             src={Logo} 
             alt="Logo" 
             className="local-time" 
@@ -34,10 +38,10 @@ const Navbar = () => {
         </div>
         
         <div className="navbar-contact">
-          <a href="#contact" className="contact-button">
+          <button onClick={handleContactClick} className="contact-button">
             <span className="button-text">CONTACT NOW</span>
             <span className="button-hover"></span>
-          </a>
+          </button>
         </div>
       </div>
     </nav>

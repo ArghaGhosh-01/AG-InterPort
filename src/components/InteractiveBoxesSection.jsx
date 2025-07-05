@@ -594,7 +594,7 @@ const InteractiveBoxesSection = () => {
 
 const Container = styled.div`
   position: relative;
-  width: 100%;
+  ${'' /* width: 100%; */}
   background-color: transparent;
   overflow: hidden;
   border-radius: 8px;

@@ -86,7 +86,8 @@ const FullWidthName = () => {
   };
 
   const handleExploreClick = () => {
-    console.log("Explore button clicked!");
+    // Open resume in a new tab
+    window.open('arghaghosh.xyz', '_blank'); // Replace '/resume.pdf' with your actual resume URL
   };
 
   return (
@@ -108,7 +109,7 @@ const FullWidthName = () => {
         className="explore-btn"
         onClick={handleExploreClick}
       >
-        <span ref={btnTextRef} className="btn-text">Lets Talk</span>
+        <span ref={btnTextRef} className="btn-text">View Resume</span>
         <div ref={arrowContainerRef} className="arrow-container">
           <div className="arrow-tail"></div>
           <svg className="arrow-head" viewBox="0 0 24 24" fill="none">

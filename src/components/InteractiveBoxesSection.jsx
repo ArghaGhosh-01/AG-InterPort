@@ -4,9 +4,9 @@ import styled from 'styled-components';
 const InteractiveBoxesSection = () => {
   const [boxes, setBoxes] = useState([
     { id: 1, text: "FRONTEND", baseWidth: 180, baseHeight: 60, mass: 1 },
-    { id: 2, text: "PIXEL", baseWidth: 140, baseHeight: 60, mass: 1 },
+    { id: 2, text: "REACT", baseWidth: 140, baseHeight: 60, mass: 1 },
     { id: 3, text: "UI / UX", baseWidth: 120, baseHeight: 60, mass: 1 },
-    { id: 4, text: "DEVELOPER", baseWidth: 200, baseHeight: 60, mass: 1.5 },
+    { id: 4, text: "RESPONSIVE", baseWidth: 200, baseHeight: 60, mass: 1.5 },
     { id: 5, text: "FIGMA", baseWidth: 160, baseHeight: 60, mass: 1 }
   ]);
 

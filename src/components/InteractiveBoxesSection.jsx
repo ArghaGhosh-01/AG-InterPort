@@ -534,13 +534,14 @@ const InteractiveBoxesSection = () => {
 
 const Container = styled.div`
   position: relative;
-  width: 100%;
+  ${'' /* width: ; */}
   background-color: transparent;
   overflow: hidden;
   border-radius: 8px;
   touch-action: none;
   margin: 0 15px;
   user-select: none;
+  position:relative;
 `;
 
 const Box = styled.div`

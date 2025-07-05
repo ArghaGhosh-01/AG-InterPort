@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import pixelImage from './DP.png'; // Make sure to add your PNG file
 
 const InteractiveBoxesSection = () => {
   const [boxes, setBoxes] = useState([
     { id: 1, text: "FRONTEND", baseWidth: 180, baseHeight: 60, mass: 1 },
-    { id: 2, text: "PIXEL", baseWidth: 140, baseHeight: 60, mass: 1 },
+    { id: 2, image: pixelImage, baseWidth: 140, baseHeight: 170, mass: 1 }, // Image box
     { id: 3, text: "UI / UX", baseWidth: 120, baseHeight: 60, mass: 1 },
     { id: 4, text: "DEVELOPER", baseWidth: 200, baseHeight: 60, mass: 1.5 },
     { id: 5, text: "FIGMA", baseWidth: 160, baseHeight: 60, mass: 1 }
@@ -19,16 +20,16 @@ const InteractiveBoxesSection = () => {
   const [scaleFactor, setScaleFactor] = useState(1);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Enhanced physics constants
+  // Physics constants
   const GRAVITY = 0.2;
-  const FRICTION = 0.96; // Less friction for more sliding
-  const AIR_RESISTANCE = 0.99; // Air resistance for rotation
-  const BOUNCE = 0.7; // More bounce
-  const REPULSION = 0.8; // Stronger repulsion
-  const INERTIA = 0.95; // More inertia for sliding effect
-  const SPRING = 0.1; // Spring effect when boxes overlap
-  const ROTATION_FRICTION = 0.97; // Friction for rotation
-  const MAX_ROTATION = 15; // Maximum rotation in degrees
+  const FRICTION = 0.96;
+  const AIR_RESISTANCE = 0.99;
+  const BOUNCE = 0.7;
+  const REPULSION = 0.8;
+  const INERTIA = 0.95;
+  const SPRING = 0.1;
+  const ROTATION_FRICTION = 0.97;
+  const MAX_ROTATION = 15;
 
   // Responsive setup
   useEffect(() => {
@@ -63,7 +64,7 @@ const InteractiveBoxesSection = () => {
     );
   };
 
-  // Initialize brick layout with random positions
+  // Initialize brick layout
   useEffect(() => {
     const container = containerRef.current;
     if (!container || containerHeight === 0) return;
@@ -75,15 +76,14 @@ const InteractiveBoxesSection = () => {
       width: box.baseWidth * scaleFactor,
       height: box.baseHeight * scaleFactor,
       fontSize: `${Math.max(12, 14 * scaleFactor)}px`,
-      rotation: (Math.random() * 2 - 1) * MAX_ROTATION, // Random initial rotation
-      angularVelocity: (Math.random() * 2 - 1) * 0.5, // Small random angular velocity
+      rotation: (Math.random() * 2 - 1) * MAX_ROTATION,
+      angularVelocity: (Math.random() * 2 - 1) * 0.5,
       centerX: 0,
       centerY: 0,
       lastX: 0,
       lastY: 0
     }));
 
-    // Random position function with collision avoidance
     const getRandomPosition = (box, placedBoxes, maxAttempts = 100) => {
       const container = containerRef.current;
       if (!container) return { x: 0, y: 0 };
@@ -93,29 +93,20 @@ const InteractiveBoxesSection = () => {
       
       while (attempts < maxAttempts) {
         attempts++;
-        
-        // Random position within container bounds
         const x = Math.random() * (containerWidth - box.width);
         const y = Math.random() * (containerHeight - box.height);
-        
         const testBox = { ...box, x, y };
-        
-        // Check if this position overlaps with any placed boxes
         const overlaps = placedBoxes.some(placedBox => checkOverlap(testBox, placedBox));
         
-        if (!overlaps) {
-          return { x, y };
-        }
+        if (!overlaps) return { x, y };
       }
       
-      // If we couldn't find a non-overlapping position, just return any position
       return {
         x: Math.random() * (containerWidth - box.width),
         y: Math.random() * (containerHeight - box.height)
       };
     };
 
-    // Place boxes with random positions
     const positionedBoxes = [];
     for (const box of scaledBoxes) {
       const position = getRandomPosition(box, positionedBoxes);
@@ -124,7 +115,7 @@ const InteractiveBoxesSection = () => {
         ...box,
         x: position.x,
         y: position.y,
-        vx: (Math.random() * 2 - 1) * 2, // Small random initial velocity
+        vx: (Math.random() * 2 - 1) * 2,
         vy: (Math.random() * 2 - 1) * 2,
         ax: 0,
         ay: 0,
@@ -138,11 +129,8 @@ const InteractiveBoxesSection = () => {
     setBoxes(positionedBoxes);
   }, [containerHeight, scaleFactor]);
 
-  // Enhanced collision detection with rotation consideration
   const checkCollision = (box1, box2) => {
     if (box1.id === box2.id) return false;
-    
-    // Simple AABB collision detection (good enough for small rotations)
     return (
       box1.x < box2.x + box2.width &&
       box1.x + box1.width > box2.x &&
@@ -151,11 +139,9 @@ const InteractiveBoxesSection = () => {
     );
   };
 
-  // Enhanced collision resolution with rotation effects
   const resolveCollisions = (box, allBoxes) => {
     allBoxes.forEach(otherBox => {
       if (checkCollision(box, otherBox)) {
-        // Calculate overlap
         const overlapX = Math.min(
           box.x + box.width - otherBox.x,
           otherBox.x + otherBox.width - box.x
@@ -165,27 +151,20 @@ const InteractiveBoxesSection = () => {
           otherBox.y + otherBox.height - box.y
         );
 
-        // Resolve based on smallest overlap
         if (overlapX < overlapY) {
           const direction = box.x < otherBox.x ? -1 : 1;
           const totalMass = box.mass + otherBox.mass;
-          
-          // Calculate impulse
           const impulse = (REPULSION * overlapX) / totalMass;
           
-          // Apply spring effect
           box.ax -= direction * SPRING * overlapX / box.mass;
           otherBox.ax += direction * SPRING * overlapX / otherBox.mass;
           
-          // Transfer momentum
           box.vx = (box.vx * (box.mass - otherBox.mass) + 2 * otherBox.mass * otherBox.vx) / totalMass;
           otherBox.vx = (otherBox.vx * (otherBox.mass - box.mass) + 2 * box.mass * box.vx) / totalMass;
           
-          // Apply bounce
           box.vx = -box.vx * BOUNCE;
           otherBox.vx = -otherBox.vx * BOUNCE;
           
-          // Add rotational effect based on collision point
           const collisionPointY = (box.centerY + otherBox.centerY) / 2;
           const boxCollisionY = collisionPointY - box.centerY;
           const otherBoxCollisionY = collisionPointY - otherBox.centerY;
@@ -193,29 +172,22 @@ const InteractiveBoxesSection = () => {
           box.angularVelocity += boxCollisionY * box.vx * 0.01;
           otherBox.angularVelocity -= otherBoxCollisionY * otherBox.vx * 0.01;
           
-          // Separate boxes
           box.x += direction * overlapX * 0.5;
           otherBox.x -= direction * overlapX * 0.5;
         } else {
           const direction = box.y < otherBox.y ? -1 : 1;
           const totalMass = box.mass + otherBox.mass;
-          
-          // Calculate impulse
           const impulse = (REPULSION * overlapY) / totalMass;
           
-          // Apply spring effect
           box.ay -= direction * SPRING * overlapY / box.mass;
           otherBox.ay += direction * SPRING * overlapY / otherBox.mass;
           
-          // Transfer momentum
           box.vy = (box.vy * (box.mass - otherBox.mass) + 2 * otherBox.mass * otherBox.vy) / totalMass;
           otherBox.vy = (otherBox.vy * (otherBox.mass - box.mass) + 2 * box.mass * box.vy) / totalMass;
           
-          // Apply bounce
           box.vy = -box.vy * BOUNCE;
           otherBox.vy = -otherBox.vy * BOUNCE;
           
-          // Add rotational effect based on collision point
           const collisionPointX = (box.centerX + otherBox.centerX) / 2;
           const boxCollisionX = collisionPointX - box.centerX;
           const otherBoxCollisionX = collisionPointX - otherBox.centerX;
@@ -223,12 +195,10 @@ const InteractiveBoxesSection = () => {
           box.angularVelocity -= boxCollisionX * box.vy * 0.01;
           otherBox.angularVelocity += otherBoxCollisionX * otherBox.vy * 0.01;
           
-          // Separate boxes
           box.y += direction * overlapY * 0.5;
           otherBox.y -= direction * overlapY * 0.5;
         }
         
-        // Update centers after position changes
         box.centerX = box.x + box.width / 2;
         box.centerY = box.y + box.height / 2;
         otherBox.centerX = otherBox.x + otherBox.width / 2;
@@ -237,7 +207,6 @@ const InteractiveBoxesSection = () => {
     });
   };
 
-  // Enhanced boundary enforcement with wall bounce and rotation effects
   const enforceBoundaries = (box, containerWidth, containerHeight) => {
     let { x, y, width, height, vx, vy, ax, ay, rotation, angularVelocity } = box;
     
@@ -245,13 +214,11 @@ const InteractiveBoxesSection = () => {
       x = 0;
       vx = -vx * BOUNCE;
       ax = -ax * 0.5;
-      // Add rotational effect when hitting side walls
       angularVelocity += vy * 0.2;
     } else if (x + width > containerWidth) {
       x = containerWidth - width;
       vx = -vx * BOUNCE;
       ax = -ax * 0.5;
-      // Add rotational effect when hitting side walls
       angularVelocity -= vy * 0.2;
     }
     
@@ -259,37 +226,30 @@ const InteractiveBoxesSection = () => {
       y = 0;
       vy = -vy * BOUNCE;
       ay = -ay * 0.5;
-      // Add rotational effect when hitting top/bottom
       angularVelocity -= vx * 0.1;
     } else if (y + height > containerHeight) {
       y = containerHeight - height;
       vy = -vy * BOUNCE;
       ay = -ay * 0.5;
-      // Add rotational effect when hitting top/bottom
       angularVelocity += vx * 0.1;
     }
     
-    // Limit rotation to make it more natural
     rotation += angularVelocity;
     angularVelocity *= ROTATION_FRICTION;
-    
-    // Apply air resistance to rotation
     angularVelocity *= AIR_RESISTANCE;
     
-    // Limit maximum rotation
     if (Math.abs(rotation) > MAX_ROTATION) {
       rotation = MAX_ROTATION * Math.sign(rotation);
-      angularVelocity *= 0.5; // Slow down when hitting max rotation
+      angularVelocity *= 0.5;
     }
     
-    // Update center position
     const centerX = x + width / 2;
     const centerY = y + height / 2;
     
     return { ...box, x, y, vx, vy, ax, ay, rotation, angularVelocity, centerX, centerY };
   };
 
-  // Drag handling with rotation effects
+  // Drag handling
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -317,7 +277,7 @@ const InteractiveBoxesSection = () => {
           ax: 0,
           ay: 0,
           rotation: clickedBox.rotation,
-          angularVelocity: 0, // Reset angular velocity when grabbed
+          angularVelocity: 0,
           lastX: clickedBox.x,
           lastY: clickedBox.y
         });
@@ -337,14 +297,11 @@ const InteractiveBoxesSection = () => {
       newX = Math.max(0, Math.min(newX, rect.width - draggedBox.width));
       newY = Math.max(0, Math.min(newY, rect.height - draggedBox.height));
       
-      // Calculate velocity based on movement
       const vx = (newX - draggedBox.x) * 0.5;
       const vy = (newY - draggedBox.y) * 0.5;
       
-      // Calculate rotation based on movement direction
       let newRotation = draggedBox.rotation;
       if (Math.abs(vx) > 1) {
-        // Tilt based on horizontal movement
         newRotation = Math.max(-MAX_ROTATION, Math.min(MAX_ROTATION, vy * 0.5));
       }
       
@@ -364,18 +321,16 @@ const InteractiveBoxesSection = () => {
 
     const handleMouseUp = () => {
       if (isDragging && draggedBox) {
-        // Calculate angular velocity based on movement when released
         const dx = draggedBox.x - draggedBox.lastX;
         const dy = draggedBox.y - draggedBox.lastY;
         const angularVelocity = (dx + dy) * 0.1;
         
-        // Apply the dragged box's velocity and rotation when released
         setBoxes(boxes.map(box => 
           box.id === draggedBox.id ? {
             ...box,
             x: draggedBox.x,
             y: draggedBox.y,
-            vx: draggedBox.vx * 1.5, // Give it a little extra push
+            vx: draggedBox.vx * 1.5,
             vy: draggedBox.vy * 1.5,
             rotation: draggedBox.rotation,
             angularVelocity: angularVelocity,
@@ -390,7 +345,6 @@ const InteractiveBoxesSection = () => {
       setDraggedBox(null);
     };
 
-    // Touch event handlers for mobile
     const handleTouchStart = (e) => {
       const touch = e.touches[0];
       const rect = container.getBoundingClientRect();
@@ -440,10 +394,8 @@ const InteractiveBoxesSection = () => {
       const vx = (newX - draggedBox.x) * 0.5;
       const vy = (newY - draggedBox.y) * 0.5;
       
-      // Calculate rotation based on movement direction
       let newRotation = draggedBox.rotation;
       if (Math.abs(vx) > 1) {
-        // Tilt based on horizontal movement
         newRotation = Math.max(-MAX_ROTATION, Math.min(MAX_ROTATION, vy * 0.5));
       }
       
@@ -484,11 +436,11 @@ const InteractiveBoxesSection = () => {
     };
   }, [isDragging, draggedBox, boxes]);
 
-  // Enhanced physics animation loop with rotation
+  // Physics animation loop
   useEffect(() => {
     const animate = (timestamp) => {
       if (!lastTimeRef.current) lastTimeRef.current = timestamp;
-      const deltaTime = Math.min(timestamp - lastTimeRef.current, 32); // Cap at 32ms
+      const deltaTime = Math.min(timestamp - lastTimeRef.current, 32);
       lastTimeRef.current = timestamp;
 
       if (deltaTime > 0 && !isDragging) {
@@ -498,32 +450,20 @@ const InteractiveBoxesSection = () => {
           const containerWidth = container.clientWidth;
 
           const newBoxes = prevBoxes.map(box => {
-            // Apply gravity
             let ay = box.ay + GRAVITY;
-            
-            // Apply friction
             let ax = box.ax * FRICTION;
             ay = ay * FRICTION;
-            
-            // Update velocity with acceleration
             let vx = (box.vx + ax) * INERTIA;
             let vy = (box.vy + ay) * INERTIA;
-            
-            // Update position
             let newX = box.x + vx;
             let newY = box.y + vy;
-            
-            // Update rotation
             let newRotation = box.rotation + box.angularVelocity;
             let newAngularVelocity = box.angularVelocity * ROTATION_FRICTION;
-            
-            // Apply air resistance to rotation
             newAngularVelocity *= AIR_RESISTANCE;
             
-            // Limit maximum rotation
             if (Math.abs(newRotation) > MAX_ROTATION) {
               newRotation = MAX_ROTATION * Math.sign(newRotation);
-              newAngularVelocity *= 0.5; // Slow down when hitting max rotation
+              newAngularVelocity *= 0.5;
             }
 
             return { 
@@ -532,7 +472,7 @@ const InteractiveBoxesSection = () => {
               y: newY, 
               vx, 
               vy,
-              ax: 0, // Reset acceleration
+              ax: 0,
               ay: 0,
               rotation: newRotation,
               angularVelocity: newAngularVelocity,
@@ -543,12 +483,10 @@ const InteractiveBoxesSection = () => {
             };
           });
 
-          // Check collisions between all boxes
           for (let i = 0; i < newBoxes.length; i++) {
             resolveCollisions(newBoxes[i], newBoxes);
           }
 
-          // Apply boundaries
           return newBoxes.map(box => 
             enforceBoundaries(box, containerWidth, containerHeight)
           );
@@ -582,10 +520,12 @@ const InteractiveBoxesSection = () => {
             transition: isDragging && box.id === draggedBox?.id ? 'none' : 'transform 0.1s ease',
             zIndex: isDragging && box.id === draggedBox?.id ? 100 : 1,
             opacity: isDragging && box.id === draggedBox?.id ? 0.9 : 1,
-            transformOrigin: 'center center'
+            transformOrigin: 'center center',
+            background: box.image ? `url(${box.image}) center/contain no-repeat` : '#000000',
+            color: box.image ? 'transparent' : 'white'
           }}
         >
-          {box.text}
+          {!box.image && box.text}
         </Box>
       ))}
     </Container>
@@ -619,7 +559,7 @@ const Box = styled.div`
   white-space: nowrap;
   box-sizing: border-box;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  backface-visibility: hidden; // Improve rotation performance
+  backface-visibility: hidden;
   
   &:active {
     box-shadow: 0 0 15px rgba(255,255,255,0.7);

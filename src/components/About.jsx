@@ -3,9 +3,8 @@ const About = () => {
   return (
     <div id='about' className="about-container">
       <div className="heading-stack">
-        <h1 className="about-heading">I AM</h1>
         <h1 className="about-heading">A FRONTEND DEVELOPER</h1>
-        <h1 className="about-heading">FROM INDIA</h1>
+        <h1 className="about-heading">FROM INDIA *</h1>
       </div>
 
       <div className="about-sections">

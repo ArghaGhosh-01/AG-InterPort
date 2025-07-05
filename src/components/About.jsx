@@ -122,6 +122,7 @@ const About = () => {
               ● ●
             </BulletPoints>
           </ContentSection>
+          
         ))}
       </ContentSections>
     </AboutContainer>

@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
+import { motion, useInView } from 'framer-motion';
 
 const Projects = () => {
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: false, amount: 0.2 });
+
   const projects = [
     {
       id: 1,
@@ -45,23 +49,77 @@ const Projects = () => {
     }
   ];
 
+  // Split heading into letters for animation
+  const heading1 = "FEATURED";
+  const heading2 = "WORK *";
+
   return (
-    <ProjectsContainer id="projects">
-      <div className="heading-stack">
-        <h1 className="about-heading">FEATURED</h1>
-        <h1 className="about-heading">WORK *</h1>
-      </div>
+    <ProjectsContainer 
+          className="about-container"
+      id="projects"
+      ref={sectionRef}
+    >
+      <HeadingStack className="heading-stack">
+        <AnimatedHeading className="about-heading">
+          {heading1.split("").map((char, i) => (
+            <motion.span 
+              key={`h1-${i}`}
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ delay: i * 0.05, type: "spring" }}
+            >
+              {char}
+            </motion.span>
+          ))}
+        </AnimatedHeading>
+        
+        <AnimatedHeading className="about-heading">
+          {heading2.split("").map((char, i) => (
+            <motion.span 
+              key={`h2-${i}`}
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ delay: (i + heading1.length) * 0.05, type: "spring" }}
+            >
+              {char}
+            </motion.span>
+          ))}
+        </AnimatedHeading>
+      </HeadingStack>
 
       <BentoGrid>
-        {projects.map((project) => (
+        {projects.map((project, index) => (
           <ProjectCard 
-            key={project.id} 
-            $width={project.width} 
+            key={project.id}
+            $width={project.width}
             $bgImage={project.bgImage}
+            initial={{ 
+              opacity: 0, 
+              x: index % 2 === 0 ? -100 : 100,
+              rotate: index % 2 === 0 ? -5 : 5
+            }}
+            animate={isInView ? { 
+              opacity: 1, 
+              x: 0,
+              rotate: 0
+            } : { 
+              opacity: 0,
+              x: index % 2 === 0 ? -100 : 100,
+              rotate: index % 2 === 0 ? -5 : 5
+            }}
+            transition={{ 
+              delay: 0.3 + index * 0.15,
+              type: "spring",
+              stiffness: 60,
+              damping: 10
+            }}
+            whileHover={{
+              y: -10,
+              scale: 1.02,
+              transition: { duration: 0.2 }
+            }}
           >
-            <ProjectContent>
-              {/* Content can be added here if needed later */}
-            </ProjectContent>
+            <ProjectOverlay />
           </ProjectCard>
         ))}
       </BentoGrid>
@@ -70,58 +128,70 @@ const Projects = () => {
 };
 
 // Styled components
-const ProjectsContainer = styled.section`
+const ProjectsContainer = styled(motion.section)`
   max-width: 1200px;
-  margin: 10vh auto;
+  margin: 15vh auto;
   padding: 0 1.5rem;
   color: #fff;
   font-family: 'Helvetica Neue', sans-serif;
+  overflow: hidden;
 `;
 
-const BentoGrid = styled.div`
+const HeadingStack = styled.div`
+  margin-bottom: 4rem;
+`;
+
+const AnimatedHeading = styled(motion.h1)`
+  display: block;
+  font-size: clamp(2rem, 8vw, 4rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin: 0;
+  overflow: hidden;
+
+  span {
+    display: inline-block;
+    will-change: transform, opacity;
+  }
+`;
+
+const BentoGrid = styled(motion.div)`
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  gap: 1rem;
+  gap: 1.5rem;
   width: 100%;
 `;
 
-const ProjectCard = styled.div`
+const ProjectCard = styled(motion.div)`
   position: relative;
-  border-radius: 8px;
+  border-radius: 16px;
   overflow: hidden;
   background: url(${props => props.$bgImage}) center/cover no-repeat;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   grid-column: ${props => props.$width === 'wide' ? 'span 8' : 'span 4'};
   aspect-ratio: ${props => props.$width === 'wide' ? '2/1' : '1/1'};
-  transition: transform 0.2s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
-  &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-  }
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  will-change: transform, opacity;
 
   @media (max-width: 768px) {
     grid-column: span 12;
     aspect-ratio: 3/4;
   }
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.2);
-  }
 `;
 
-const ProjectContent = styled.div`
-  width: 100%;
-  height: 100%;
-  position: relative;
-  z-index: 1;
+const ProjectOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+
+  ${ProjectCard}:hover & {
+    opacity: 1;
+  }
 `;
 
 export default Projects;

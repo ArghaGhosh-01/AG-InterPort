@@ -55,7 +55,7 @@ const Projects = () => {
 
   return (
     <ProjectsContainer 
-          className="about-container"
+      className="about-container"
       id="projects"
       ref={sectionRef}
     >
@@ -66,7 +66,7 @@ const Projects = () => {
               key={`h1-${i}`}
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ delay: i * 0.05, type: "spring" }}
+              transition={{ delay: i * 0.02, type: "spring" }}
             >
               {char}
             </motion.span>
@@ -79,7 +79,7 @@ const Projects = () => {
               key={`h2-${i}`}
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ delay: (i + heading1.length) * 0.05, type: "spring" }}
+              transition={{ delay: (i + heading1.length) * 0.02, type: "spring" }}
             >
               {char}
             </motion.span>
@@ -95,31 +95,36 @@ const Projects = () => {
             $bgImage={project.bgImage}
             initial={{ 
               opacity: 0, 
-              x: index % 2 === 0 ? -100 : 100,
-              rotate: index % 2 === 0 ? -5 : 5
+              x: index % 2 === 0 ? -100 : 100
             }}
             animate={isInView ? { 
               opacity: 1, 
-              x: 0,
-              rotate: 0
+              x: 0
             } : { 
               opacity: 0,
-              x: index % 2 === 0 ? -100 : 100,
-              rotate: index % 2 === 0 ? -5 : 5
+              x: index % 2 === 0 ? -100 : 100
             }}
             transition={{ 
-              delay: 0.3 + index * 0.15,
+              delay: 0.2 + index * 0.15,
               type: "spring",
-              stiffness: 60,
+              stiffness: 100,
               damping: 10
             }}
             whileHover={{
               y: -10,
-              scale: 1.02,
               transition: { duration: 0.2 }
             }}
           >
             <ProjectOverlay />
+            <ProjectContent>
+              <h3>{project.title}</h3>
+              <p>{project.description}</p>
+              <Tags>
+                {project.tags.map((tag, i) => (
+                  <span key={i}>{tag}</span>
+                ))}
+              </Tags>
+            </ProjectContent>
           </ProjectCard>
         ))}
       </BentoGrid>
@@ -172,6 +177,12 @@ const ProjectCard = styled(motion.div)`
   aspect-ratio: ${props => props.$width === 'wide' ? '2/1' : '1/1'};
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   will-change: transform, opacity;
+  filter: grayscale(100%) contrast(110%) brightness(90%);
+  transition: filter 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+    filter: grayscale(0%) contrast(100%) brightness(100%);
+  }
 
   @media (max-width: 768px) {
     grid-column: span 12;
@@ -191,6 +202,51 @@ const ProjectOverlay = styled.div`
 
   ${ProjectCard}:hover & {
     opacity: 1;
+  }
+`;
+
+const ProjectContent = styled.div`
+  position: relative;
+  z-index: 2;
+  padding: 2rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+
+  h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  ${ProjectCard}:hover & {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const Tags = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+
+  span {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    padding: 0.25rem 0.75rem;
+    border-radius: 100px;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
 `;
 

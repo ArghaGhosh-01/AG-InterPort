@@ -24,7 +24,7 @@ const About = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ 
-                delay: i * 0.05,
+                delay: i * 0.02,
                 type: "spring",
                 stiffness: 100,
                 damping: 10
@@ -42,7 +42,7 @@ const About = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ 
-                delay: (i + heading1.length) * 0.05,
+                delay: (i + heading1.length) * 0.02,
                 type: "spring",
                 stiffness: 100,
                 damping: 10
@@ -75,7 +75,7 @@ const About = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ 
-              delay: 0.3 + index * 0.15,
+              delay: 0.2 + index * 0.15,
               type: "spring",
               stiffness: 100,
               damping: 10
@@ -90,7 +90,7 @@ const About = () => {
                 initial={{ opacity: 0, x: -20 }}
                 animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                 transition={{ 
-                  delay: 0.4 + index * 0.15,
+                  delay: 0.2 + index * 0.15,
                   ease: [0.16, 1, 0.3, 1],
                   duration: 0.6
                 }}
@@ -101,7 +101,7 @@ const About = () => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                 transition={{ 
-                  delay: 0.5 + index * 0.15,
+                  delay: 0.2 + index * 0.15,
                   ease: [0.16, 1, 0.3, 1],
                   duration: 0.6
                 }}

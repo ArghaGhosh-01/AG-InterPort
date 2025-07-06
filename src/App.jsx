@@ -4,6 +4,7 @@ import InteractiveBoxesSection from "./components/InteractiveBoxesSection";
 import FullWidthName from "./components/FullWidthName";
 import About from "./components/About";
 import Projects from "./components/Projects";
+import Footer from './components/footer';
 
 function App() {
   useEffect(() => {
@@ -23,6 +24,7 @@ function App() {
       <FullWidthName />
       <About />
       <Projects />
+      <Footer />
     </div>
   );
 }

@@ -87,7 +87,7 @@ const FullWidthName = () => {
 
   const handleExploreClick = () => {
     // Open resume in a new tab
-    window.open('arghaghosh.xyz', '_blank'); // Replace '/resume.pdf' with your actual resume URL
+    window.open('https://drive.google.com/file/d/1BlPIvhSgcrdGe4CXLfh82sjSeEs-sgBU/view?usp=sharing', '_blank'); // Replace '/resume.pdf' with your actual resume URL
   };
 
   return (

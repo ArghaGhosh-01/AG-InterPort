@@ -2,11 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 
 const FullWidthName = () => {
   const [displayContent, setDisplayContent] = useState([]);
+  const [isButtonVisible, setIsButtonVisible] = useState(false);
   const fullText = "ARGHA GHOSH";
-  const animationDelay = 100; // Delay between each character animation
+  const animationDelay = 100;
   const exploreBtnRef = useRef(null);
   const btnTextRef = useRef(null);
   const arrowContainerRef = useRef(null);
+  const containerRef = useRef(null);
 
   useEffect(() => {
     const content = [];
@@ -22,7 +24,7 @@ const FullWidthName = () => {
             className="name-letter"
             style={{
               animationDelay: `${i * animationDelay}ms`,
-              opacity: 0, // Start invisible, animation will make it appear
+              opacity: 0,
               display: 'inline-block'
             }}
           >
@@ -33,6 +35,22 @@ const FullWidthName = () => {
     }
     
     setDisplayContent(content);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        const triggerPoint = window.innerHeight * 0.8;
+        if (rect.top < triggerPoint && rect.bottom > 0) {
+          setIsButtonVisible(true);
+        }
+      }
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
@@ -50,14 +68,10 @@ const FullWidthName = () => {
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
       
-      // Calculate distance from center (normalized to -1 to 1)
       const distanceX = (x - centerX) / centerX;
       const distanceY = (y - centerY) / centerY;
       
-      // Magnetic effect - text moves toward cursor
       btnText.style.transform = `translate(${distanceX * 10}px, ${distanceY * 5}px)`;
-      
-      // Arrow moves opposite direction for parallax effect
       arrowContainer.style.transform = `translate(${-distanceX * 5}px, ${-distanceY * 3}px)`;
     };
 
@@ -85,13 +99,18 @@ const FullWidthName = () => {
     }
   };
 
-  const handleExploreClick = () => {
-    // Open resume in a new tab
-    window.open('https://drive.google.com/file/d/1BlPIvhSgcrdGe4CXLfh82sjSeEs-sgBU/view?usp=sharing', '_blank'); // Replace '/resume.pdf' with your actual resume URL
+  const handleExploreClick = (e) => {
+    e.currentTarget.classList.add('clicked');
+    setTimeout(() => {
+      e.currentTarget.classList.remove('clicked');
+    }, 500);
+    setTimeout(() => {
+      window.open('https://drive.google.com/file/d/1BlPIvhSgcrdGe4CXLfh82sjSeEs-sgBU/view?usp=sharing', '_blank');
+    }, 300);
   };
 
   return (
-    <div className="full-width-container">
+    <div className="full-width-container" ref={containerRef}>
       <h1 className="full-width-name">{displayContent}</h1>
       
       <div 
@@ -106,7 +125,7 @@ const FullWidthName = () => {
 
       <button 
         ref={exploreBtnRef}
-        className="explore-btn"
+        className={`explore-btn ${isButtonVisible ? 'visible' : ''}`}
         onClick={handleExploreClick}
       >
         <span ref={btnTextRef} className="btn-text">View Resume</span>
@@ -204,11 +223,17 @@ const FullWidthName = () => {
           border: 1px solid white;
           border-radius: 50px;
           cursor: pointer;
-          transition: all 0.3s ease;
           display: flex;
           align-items: center;
           gap: 10px;
           overflow: hidden;
+          opacity: 0;
+          transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                      transform 0.3s ease;
+        }
+
+        .explore-btn.visible {
+          opacity: 1;
         }
 
         .explore-btn:hover {
@@ -216,6 +241,22 @@ const FullWidthName = () => {
           background-color: white;
           transform: translateY(-3px);
           box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .explore-btn.clicked {
+          animation: buttonClick 0.5s ease;
+        }
+
+        @keyframes buttonClick {
+          0% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(0.95);
+          }
+          100% {
+            transform: scale(1);
+          }
         }
 
         .btn-text {

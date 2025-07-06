@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import ProfilePhoto from './blog.png';
+import ProfilePhoto from './DP.png';
 import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope } from 'react-icons/fa';
 
 // Enhanced scramble effect hook with scroll trigger

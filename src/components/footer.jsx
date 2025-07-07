@@ -36,14 +36,14 @@ const Footer = () => {
           <span className="headline-line">TALK</span>
         </h1>
         <div className="btn-container" role="navigation" aria-label="Social links">
-          <button className="social-btn" type="button" onClick={() => openLink('https://github.com')}>
+          <button className="social-btn" type="button" onClick={() => openLink('https://github.com/ArghaGhosh-01')}>
             GITHUB
           </button>
-          <button className="social-btn" type="button" onClick={() => openLink('https://linkedin.com')}>
+          <button className="social-btn" type="button" onClick={() => openLink('https://www.linkedin.com/in/argha-ghosh-94496a226/')}>
             LINKEDIN
           </button>
-          <button className="social-btn" type="button" onClick={() => openLink('https://twitter.com')}>
-            TWITTER
+          <button className="social-btn" type="button" onClick={() => openLink('https://x.com/Argha7417')}>
+            X
           </button>
         </div>
       </main>
@@ -158,7 +158,7 @@ const Footer = () => {
 
         /* Buttons style */
         .social-btn {
-          background: none;
+          background: black;
           border: 1.5px solid #eee;
           border-radius: 9999px;
           color: #eee;

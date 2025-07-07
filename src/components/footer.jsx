@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const Footer = () => {
   // Function to open social links
@@ -9,6 +9,48 @@ const Footer = () => {
   // Function for smooth scroll to top
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Scramble effect implementation
+  const scrambleRef = useRef(null);
+  const [scrambledText, setScrambledText] = useState('');
+  const originalText = "HAVE A PROJECT IN MIND?";
+  const chars = "abcdefghi!<>-_\\/[]{}—=+*^?#__________";
+
+  useEffect(() => {
+    // Initialize with scrambled text
+    let initialScramble = '';
+    for (let i = 0; i < originalText.length; i++) {
+      initialScramble += chars[Math.floor(Math.random() * chars.length)];
+    }
+    setScrambledText(initialScramble);
+
+    // Animate to original text on appear
+    animateScramble(originalText, 30);
+  }, []);
+
+  const animateScramble = (targetText, speed) => {
+    let iterations = 0;
+    const interval = setInterval(() => {
+      setScrambledText(prev => {
+        let output = '';
+        for (let i = 0; i < targetText.length; i++) {
+          if (i < iterations) {
+            output += targetText[i];
+          } else {
+            output += chars[Math.floor(Math.random() * chars.length)];
+          }
+        }
+        return output;
+      });
+
+      if (iterations >= targetText.length) clearInterval(interval);
+      iterations += 1 / 3;
+    }, speed);
+  };
+
+  const handleHover = () => {
+    animateScramble(originalText, 50);
   };
 
   return (
@@ -30,7 +72,13 @@ const Footer = () => {
       </header>
 
       <main className="footer-main-content">
-        <p className="intro-text">HAVE A PROJECT IN MIND?</p>
+        <p 
+          className="intro-text" 
+          ref={scrambleRef}
+          onMouseEnter={handleHover}
+        >
+          {scrambledText}
+        </p>
         <h1 className="headline" aria-label="Let's Talk">
           <span className="headline-line">LET'S</span>
           <span className="headline-line">TALK</span>
@@ -50,8 +98,8 @@ const Footer = () => {
 
       <footer className="footer-bottom">
         <p>
-          Design by <span>Argha Ghosh</span><br />
-          Development by <span>Argha Ghosh</span>
+          Designed by <span>Argha Ghosh</span><br />
+          Developed by <span>Argha Ghosh</span>
         </p>
       </footer>
 
@@ -127,6 +175,12 @@ const Footer = () => {
           margin-bottom: 0.25em;
           font-weight: 500;
           color: #aaa;
+          cursor: default;
+          transition: all 0.3s ease;
+        }
+
+        .intro-text:hover {
+          color: #eee;
         }
 
         /* Headline styles */
@@ -135,7 +189,7 @@ const Footer = () => {
           font-size: clamp(4rem, 15vw, 10rem);
           line-height: 1;
           letter-spacing: 0.02em;
-          color: transparent;
+          color: black;
           -webkit-text-stroke: 2.5px #eee;
           text-stroke: 2.5px #eee;
           user-select: none;

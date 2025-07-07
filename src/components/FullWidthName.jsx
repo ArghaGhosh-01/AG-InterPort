@@ -2,9 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 
 const FullWidthName = () => {
   const [displayContent, setDisplayContent] = useState([]);
+  const [hoverIndex, setHoverIndex] = useState(-1);
   const [isButtonVisible, setIsButtonVisible] = useState(false);
   const fullText = "ARGHA GHOSH";
   const animationDelay = 100;
+  const hoverTransitionDelay = 50;
   const exploreBtnRef = useRef(null);
   const btnTextRef = useRef(null);
   const arrowContainerRef = useRef(null);
@@ -15,27 +17,42 @@ const FullWidthName = () => {
     
     for (let i = 0; i < fullText.length; i++) {
       const char = fullText[i];
-      if (char === ' ') {
-        content.push(' ');
-      } else {
-        content.push(
-          <span 
-            key={`char-${i}`} 
-            className="name-letter"
-            style={{
-              animationDelay: `${i * animationDelay}ms`,
-              opacity: 0,
-              display: 'inline-block'
-            }}
-          >
-            {char}
-          </span>
-        );
-      }
+      const isSpace = char === ' ';
+      
+      content.push(
+        <span 
+          key={`char-${i}`} 
+          className={`name-letter`}
+          style={{
+            animationDelay: `${i * animationDelay}ms`,
+            opacity: 0,
+            display: 'inline-block',
+            position: 'relative',
+            width: isSpace ? '0.5em' : 'auto',
+            minWidth: isSpace ? '0.5em' : 'auto',
+            '--hover-delay': `${(i - hoverIndex) * hoverTransitionDelay}ms`,
+          }}
+          onMouseEnter={() => setHoverIndex(i)}
+          onMouseLeave={() => setHoverIndex(-1)}
+          data-char={char}
+          data-index={i}
+        >
+          {!isSpace && (
+            <>
+              <span className={`normal-char ${hoverIndex >= 0 && i >= hoverIndex ? 'hidden' : ''}`}>
+                {char}
+              </span>
+              <span className={`outline-effect ${hoverIndex >= 0 && i >= hoverIndex ? 'visible' : ''}`}>
+                {char}
+              </span>
+            </>
+          )}
+        </span>
+      );
     }
     
     setDisplayContent(content);
-  }, []);
+  }, [hoverIndex]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -159,7 +176,7 @@ const FullWidthName = () => {
           color: #ffffff;
           text-transform: uppercase;
           letter-spacing: 0.01em;
-          white-space: nowrap;
+          white-space: pre;
           margin: 0;
           padding: 0.3em 0 0 0;
           width: 100%;
@@ -171,6 +188,9 @@ const FullWidthName = () => {
           display: inline-block;
           transform: translateY(20px);
           animation: letterAppear 0.6s ease forwards;
+          position: relative;
+          z-index: 1;
+          transition: transform 0.3s ease;
         }
 
         @keyframes letterAppear {
@@ -186,6 +206,36 @@ const FullWidthName = () => {
 
         .name-letter:hover {
           transform: translateY(-40px);
+        }
+
+        .normal-char {
+          display: inline-block;
+          transition: opacity 0.3s ease;
+        }
+
+        .normal-char.hidden {
+          opacity: 0;
+          transition-delay: calc(var(--hover-delay));
+        }
+
+        .outline-effect {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          color:black;
+          -webkit-text-stroke: 2px white;
+          text-stroke: 2px white;
+          z-index: -1;
+          pointer-events: none;
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+
+        .outline-effect.visible {
+          opacity: 1;
+          transition-delay: calc(var(--hover-delay));
         }
 
         .down-arrow {

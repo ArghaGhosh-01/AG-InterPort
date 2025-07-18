@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { motion, useInView } from 'framer-motion';
+import Chocolate from "../assets/Chocolate.png";
 
 const Projects = () => {
   const sectionRef = useRef(null);
@@ -9,11 +10,12 @@ const Projects = () => {
   const projects = [
     {
       id: 1,
-      title: "Interactive Dashboard",
+      title: "CHOCOLATE",
       description: "Stream-friendly designed dashboard with multiple interactions",
-      tags: ["UI/UX", "Web App"],
+      tags: ["UI/UX", "Web App", "Wix"],
       width: "wide",
-      bgImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+      bgImage: Chocolate,
+      link: "https://argha7417.wixstudio.com/chocolate" // Added link
     },
     {
       id: 2,
@@ -22,7 +24,8 @@ const Projects = () => {
       description: "3D Interactive Experience for Visual Appeal",
       tags: ["3D Design", "Product"],
       width: "narrow",
-      bgImage: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+      bgImage: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      link: "#" // Added link
     },
     {
       id: 3,
@@ -33,7 +36,8 @@ const Projects = () => {
       width: "narrow",
       temp: "32°C",
       location: "Dubai",
-      bgImage: "https://images.unsplash.com/photo-1530908295418-a12e326966ba?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+      bgImage: "https://images.unsplash.com/photo-1530908295418-a12e326966ba?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      link: "#" // Added link
     },
     {
       id: 4,
@@ -45,8 +49,32 @@ const Projects = () => {
         "Award-Winning Animations",
         "Hackathon Winning Project"
       ],
-      bgImage: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-    }
+      bgImage: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+      link: "#" // Added link
+    },
+    {
+      id: 5,
+      title: "Connect - Website Revamp",
+      description: "Award-winning animations and smooth interactions",
+      tags: ["Web Design", "Animation"],
+      width: "wide",
+      features: [
+        "Award-Winning Animations",
+        "Hackathon Winning Project"
+      ],
+      bgImage: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+      link: "#" // Added link
+    },
+    {
+      id: 6,
+      title: "Airpods Max",
+      subtitle: "Symphonic Boom",
+      description: "3D Interactive Experience for Visual Appeal",
+      tags: ["3D Design", "Product"],
+      width: "narrow",
+      bgImage: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      link: "#" // Added link
+    },
   ];
 
   // Split heading into letters for animation
@@ -89,50 +117,57 @@ const Projects = () => {
 
       <BentoGrid>
         {projects.map((project, index) => (
-          <ProjectCard 
+          <ProjectLink 
+            href={project.link} 
+            target="_blank" 
+            rel="noopener noreferrer"
             key={project.id}
             $width={project.width}
-            $bgImage={project.bgImage}
-            initial={{ 
-              opacity: 0, 
-              x: index % 2 === 0 ? -100 : 100
-            }}
-            animate={isInView ? { 
-              opacity: 1, 
-              x: 0
-            } : { 
-              opacity: 0,
-              x: index % 2 === 0 ? -100 : 100
-            }}
-            transition={{ 
-              delay: 0.2 + index * 0.15,
-              type: "spring",
-              stiffness: 100,
-              damping: 10
-            }}
-            whileHover={{
-              y: -10,
-              transition: { duration: 0.2 }
-            }}
           >
-            <ProjectOverlay />
-            <ProjectContent>
-              <h3>{project.title}</h3>
-              <p>{project.description}</p>
-              <Tags>
-                {project.tags.map((tag, i) => (
-                  <span key={i}>{tag}</span>
-                ))}
-              </Tags>
-            </ProjectContent>
-          </ProjectCard>
+            <ProjectCard 
+              $width={project.width}
+              $bgImage={project.bgImage}
+              initial={{ 
+                opacity: 0, 
+                x: index % 2 === 0 ? -100 : 100
+              }}
+              animate={isInView ? { 
+                opacity: 1, 
+                x: 0
+              } : { 
+                opacity: 0,
+                x: index % 2 === 0 ? -100 : 100
+              }}
+              transition={{ 
+                delay: 0.2 + index * 0.15,
+                type: "spring",
+                stiffness: 100,
+                damping: 10
+              }}
+              whileHover={{
+                y: -10,
+                transition: { duration: 0.2 }
+              }}
+            >
+              <ProjectOverlay />
+              <ProjectContent>
+                <h3>{project.title}</h3>
+                <p>{project.description}</p>
+                <Tags>
+                  {project.tags.map((tag, i) => (
+                    <span key={i}>{tag}</span>
+                  ))}
+                </Tags>
+              </ProjectContent>
+            </ProjectCard>
+          </ProjectLink>
         ))}
       </BentoGrid>
     </ProjectsContainer>
   );
 };
 
-// Styled components
+// Styled components - all existing styles remain the same
 const ProjectsContainer = styled(motion.section)`
   max-width: 1200px;
   margin: 15vh auto;
@@ -167,13 +202,22 @@ const BentoGrid = styled(motion.div)`
   width: 100%;
 `;
 
+const ProjectLink = styled.a`
+  text-decoration: none;
+  color: inherit;
+  grid-column: ${props => props.$width === 'wide' ? 'span 8' : 'span 4'};
+  
+  @media (max-width: 768px) {
+    grid-column: span 12;
+  }
+`;
+
 const ProjectCard = styled(motion.div)`
   position: relative;
   border-radius: 16px;
   overflow: hidden;
   background: url(${props => props.$bgImage}) center/cover no-repeat;
   border: 1px solid rgba(255, 255, 255, 0.15);
-  grid-column: ${props => props.$width === 'wide' ? 'span 8' : 'span 4'};
   aspect-ratio: ${props => props.$width === 'wide' ? '2/1' : '1/1'};
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   will-change: transform, opacity;
@@ -185,7 +229,6 @@ const ProjectCard = styled(motion.div)`
   }
 
   @media (max-width: 768px) {
-    grid-column: span 12;
     aspect-ratio: 3/4;
   }
 `;

@@ -244,12 +244,7 @@ const ProjectCard = styled(motion.div)`
   aspect-ratio: ${props => props.$width === 'wide' ? '2/1' : '1/1'};
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   will-change: transform, opacity;
-  filter: grayscale(100%) contrast(110%) brightness(90%);
-  transition: filter 0.3s ease, transform 0.3s ease;
-
-  &:hover {
-    filter: grayscale(0%) contrast(100%) brightness(100%);
-  }
+  transition: transform 0.3s ease;
 
   @media (max-width: 768px) {
     aspect-ratio: 3/4;

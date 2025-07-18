@@ -16,67 +16,36 @@ const Projects = () => {
   const projects = [
     {
       id: 1,
-      title: "CHOCOLATE",
-      description: "Stream-friendly designed dashboard with multiple interactions",
-      tags: ["UI/UX", "Web App", "Wix"],
       width: "wide",
       bgImage: Chocolate,
       link: "https://argha7417.wixstudio.com/chocolate"
     },
     {
       id: 2,
-      title: "Airpods Max",
-      subtitle: "Symphonic Boom",
-      description: "3D Interactive Experience for Visual Appeal",
-      tags: ["3D Design", "Product"],
       width: "narrow",
       bgImage: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
       link: "#"
     },
     {
       id: 3,
-      title: "Intraairbroad",
-      subtitle: "Weather app that shows what you need",
-      description: "Dark, cross-platform surface with intuitive UI",
-      tags: ["Mobile App", "Weather"],
       width: "narrow",
-      temp: "32°C",
-      location: "Dubai",
       bgImage: "https://images.unsplash.com/photo-1530908295418-a12e326966ba?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
       link: "#"
     },
     {
       id: 4,
-      title: "Connect - Website Revamp",
-      description: "Award-winning animations and smooth interactions",
-      tags: ["Web Design", "Animation"],
       width: "wide",
-      features: [
-        "Award-Winning Animations",
-        "Hackathon Winning Project"
-      ],
       bgImage: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
       link: "#"
     },
     {
       id: 5,
-      title: "Connect - Website Revamp",
-      description: "Award-winning animations and smooth interactions",
-      tags: ["Web Design", "Animation"],
       width: "wide",
-      features: [
-        "Award-Winning Animations",
-        "Hackathon Winning Project"
-      ],
       bgImage: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
       link: "#"
     },
     {
       id: 6,
-      title: "Airpods Max",
-      subtitle: "Symphonic Boom",
-      description: "3D Interactive Experience for Visual Appeal",
-      tags: ["3D Design", "Product"],
       width: "narrow",
       bgImage: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
       link: "#"
@@ -169,18 +138,7 @@ const Projects = () => {
                   y: -10,
                   transition: { duration: 0.2 }
                 }}
-              >
-                <ProjectOverlay />
-                <ProjectContent>
-                  <h3>{project.title}</h3>
-                  <p>{project.description}</p>
-                  <Tags>
-                    {project.tags.map((tag, i) => (
-                      <span key={i}>{tag}</span>
-                    ))}
-                  </Tags>
-                </ProjectContent>
-              </ProjectCard>
+              />
             </ProjectLink>
           ))}
         </BentoGrid>
@@ -248,66 +206,6 @@ const ProjectCard = styled(motion.div)`
 
   @media (max-width: 768px) {
     aspect-ratio: 3/4;
-  }
-`;
-
-const ProjectOverlay = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-
-  ${ProjectCard}:hover & {
-    opacity: 1;
-  }
-`;
-
-const ProjectContent = styled.div`
-  position: relative;
-  z-index: 2;
-  padding: 2rem;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.3s ease;
-
-  h3 {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-  }
-
-  p {
-    margin-bottom: 1rem;
-    font-size: 0.9rem;
-    line-height: 1.4;
-  }
-
-  ${ProjectCard}:hover & {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-
-const Tags = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-
-  span {
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    padding: 0.25rem 0.75rem;
-    border-radius: 100px;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
   }
 `;
 

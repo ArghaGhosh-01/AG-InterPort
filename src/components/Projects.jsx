@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { motion, useInView } from 'framer-motion';
 import Chocolate from "../assets/Chocolate.png";
@@ -6,6 +6,12 @@ import Chocolate from "../assets/Chocolate.png";
 const Projects = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: false, amount: 0.2 });
+  const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 });
+  const [isHovering, setIsHovering] = useState(false);
+
+  const handleMouseMove = (e) => {
+    setCursorPos({ x: e.clientX, y: e.clientY });
+  };
 
   const projects = [
     {
@@ -15,7 +21,7 @@ const Projects = () => {
       tags: ["UI/UX", "Web App", "Wix"],
       width: "wide",
       bgImage: Chocolate,
-      link: "https://argha7417.wixstudio.com/chocolate" // Added link
+      link: "https://argha7417.wixstudio.com/chocolate"
     },
     {
       id: 2,
@@ -25,7 +31,7 @@ const Projects = () => {
       tags: ["3D Design", "Product"],
       width: "narrow",
       bgImage: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-      link: "#" // Added link
+      link: "#"
     },
     {
       id: 3,
@@ -37,7 +43,7 @@ const Projects = () => {
       temp: "32°C",
       location: "Dubai",
       bgImage: "https://images.unsplash.com/photo-1530908295418-a12e326966ba?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-      link: "#" // Added link
+      link: "#"
     },
     {
       id: 4,
@@ -50,7 +56,7 @@ const Projects = () => {
         "Hackathon Winning Project"
       ],
       bgImage: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-      link: "#" // Added link
+      link: "#"
     },
     {
       id: 5,
@@ -63,7 +69,7 @@ const Projects = () => {
         "Hackathon Winning Project"
       ],
       bgImage: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-      link: "#" // Added link
+      link: "#"
     },
     {
       id: 6,
@@ -73,7 +79,7 @@ const Projects = () => {
       tags: ["3D Design", "Product"],
       width: "narrow",
       bgImage: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-      link: "#" // Added link
+      link: "#"
     },
   ];
 
@@ -82,92 +88,108 @@ const Projects = () => {
   const heading2 = "WORK *";
 
   return (
-    <ProjectsContainer 
-      className="about-container"
-      id="projects"
-      ref={sectionRef}
-    >
-      <HeadingStack className="heading-stack">
-        <AnimatedHeading className="about-heading">
-          {heading1.split("").map((char, i) => (
-            <motion.span 
-              key={`h1-${i}`}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ delay: i * 0.02, type: "spring" }}
-            >
-              {char}
-            </motion.span>
-          ))}
-        </AnimatedHeading>
-        
-        <AnimatedHeading className="about-heading">
-          {heading2.split("").map((char, i) => (
-            <motion.span 
-              key={`h2-${i}`}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ delay: (i + heading1.length) * 0.02, type: "spring" }}
-            >
-              {char}
-            </motion.span>
-          ))}
-        </AnimatedHeading>
-      </HeadingStack>
+    <div onMouseMove={handleMouseMove}>
+      {/* Custom Cursor */}
+      <CustomCursor
+        style={{
+          left: `${cursorPos.x}px`,
+          top: `${cursorPos.y}px`,
+          opacity: isHovering ? 1 : 0,
+          transform: `translate(-50%, -50%) scale(${isHovering ? 1 : 0.5})`
+        }}
+      >
+        VIEW
+      </CustomCursor>
 
-      <BentoGrid>
-        {projects.map((project, index) => (
-          <ProjectLink 
-            href={project.link} 
-            target="_blank" 
-            rel="noopener noreferrer"
-            key={project.id}
-            $width={project.width}
-          >
-            <ProjectCard 
+      <ProjectsContainer 
+        className="about-container"
+        id="projects"
+        ref={sectionRef}
+      >
+        <HeadingStack className="heading-stack">
+          <AnimatedHeading className="about-heading">
+            {heading1.split("").map((char, i) => (
+              <motion.span 
+                key={`h1-${i}`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ delay: i * 0.02, type: "spring" }}
+              >
+                {char}
+              </motion.span>
+            ))}
+          </AnimatedHeading>
+          
+          <AnimatedHeading className="about-heading">
+            {heading2.split("").map((char, i) => (
+              <motion.span 
+                key={`h2-${i}`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ delay: (i + heading1.length) * 0.02, type: "spring" }}
+              >
+                {char}
+              </motion.span>
+            ))}
+          </AnimatedHeading>
+        </HeadingStack>
+
+        <BentoGrid>
+          {projects.map((project, index) => (
+            <ProjectLink 
+              href={project.link} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              key={project.id}
               $width={project.width}
-              $bgImage={project.bgImage}
-              initial={{ 
-                opacity: 0, 
-                x: index % 2 === 0 ? -100 : 100
-              }}
-              animate={isInView ? { 
-                opacity: 1, 
-                x: 0
-              } : { 
-                opacity: 0,
-                x: index % 2 === 0 ? -100 : 100
-              }}
-              transition={{ 
-                delay: 0.2 + index * 0.15,
-                type: "spring",
-                stiffness: 100,
-                damping: 10
-              }}
-              whileHover={{
-                y: -10,
-                transition: { duration: 0.2 }
-              }}
+              onMouseEnter={() => setIsHovering(true)}
+              onMouseLeave={() => setIsHovering(false)}
             >
-              <ProjectOverlay />
-              <ProjectContent>
-                <h3>{project.title}</h3>
-                <p>{project.description}</p>
-                <Tags>
-                  {project.tags.map((tag, i) => (
-                    <span key={i}>{tag}</span>
-                  ))}
-                </Tags>
-              </ProjectContent>
-            </ProjectCard>
-          </ProjectLink>
-        ))}
-      </BentoGrid>
-    </ProjectsContainer>
+              <ProjectCard 
+                $width={project.width}
+                $bgImage={project.bgImage}
+                initial={{ 
+                  opacity: 0, 
+                  x: index % 2 === 0 ? -100 : 100
+                }}
+                animate={isInView ? { 
+                  opacity: 1, 
+                  x: 0
+                } : { 
+                  opacity: 0,
+                  x: index % 2 === 0 ? -100 : 100
+                }}
+                transition={{ 
+                  delay: 0.2 + index * 0.15,
+                  type: "spring",
+                  stiffness: 100,
+                  damping: 10
+                }}
+                whileHover={{
+                  y: -10,
+                  transition: { duration: 0.2 }
+                }}
+              >
+                <ProjectOverlay />
+                <ProjectContent>
+                  <h3>{project.title}</h3>
+                  <p>{project.description}</p>
+                  <Tags>
+                    {project.tags.map((tag, i) => (
+                      <span key={i}>{tag}</span>
+                    ))}
+                  </Tags>
+                </ProjectContent>
+              </ProjectCard>
+            </ProjectLink>
+          ))}
+        </BentoGrid>
+      </ProjectsContainer>
+    </div>
   );
 };
 
-// Styled components - all existing styles remain the same
+// Styled components
 const ProjectsContainer = styled(motion.section)`
   max-width: 1200px;
   margin: 15vh auto;
@@ -206,6 +228,7 @@ const ProjectLink = styled.a`
   text-decoration: none;
   color: inherit;
   grid-column: ${props => props.$width === 'wide' ? 'span 8' : 'span 4'};
+  cursor: none;
   
   @media (max-width: 768px) {
     grid-column: span 12;
@@ -291,6 +314,24 @@ const Tags = styled.div`
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
+`;
+
+const CustomCursor = styled.div`
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  background: white;
+  color: black;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  transform-origin: center;
 `;
 
 export default Projects;

@@ -12,22 +12,11 @@ const Footer = () => {
   };
 
   // Scramble effect implementation
+  const footerRef = useRef(null);
   const scrambleRef = useRef(null);
   const [scrambledText, setScrambledText] = useState('');
   const originalText = "HAVE A PROJECT IN MIND?";
   const chars = "abcdefghi!<>-_\\/[]{}—=+*^?#__________";
-
-  useEffect(() => {
-    // Initialize with scrambled text
-    let initialScramble = '';
-    for (let i = 0; i < originalText.length; i++) {
-      initialScramble += chars[Math.floor(Math.random() * chars.length)];
-    }
-    setScrambledText(initialScramble);
-
-    // Animate to original text on appear
-    animateScramble(originalText, 30);
-  }, []);
 
   const animateScramble = (targetText, speed) => {
     let iterations = 0;
@@ -49,12 +38,55 @@ const Footer = () => {
     }, speed);
   };
 
+  const resetAndAnimate = () => {
+    // First reset to scrambled state
+    let initialScramble = '';
+    for (let i = 0; i < originalText.length; i++) {
+      initialScramble += chars[Math.floor(Math.random() * chars.length)];
+    }
+    setScrambledText(initialScramble);
+    
+    // Then animate to original
+    setTimeout(() => {
+      animateScramble(originalText, 30);
+    }, 100);
+  };
+
   const handleHover = () => {
     animateScramble(originalText, 50);
   };
 
+  useEffect(() => {
+    // Initialize with scrambled text
+    resetAndAnimate();
+
+    // Set up Intersection Observer to trigger animation when footer comes into view
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            resetAndAnimate();
+          }
+        });
+      },
+      {
+        threshold: 0.1, // Trigger when 10% of the footer is visible
+      }
+    );
+
+    if (footerRef.current) {
+      observer.observe(footerRef.current);
+    }
+
+    return () => {
+      if (footerRef.current) {
+        observer.unobserve(footerRef.current);
+      }
+    };
+  }, []);
+
   return (
-    <div className="footer-container">
+    <div className="footer-container" ref={footerRef}>
       <header className="footer-header">
         <div aria-label="copyright notice" role="contentinfo">
           © {new Date().getFullYear()}
@@ -98,7 +130,7 @@ const Footer = () => {
 
       <footer className="footer-bottom">
         <p>
-          Designed by <span>Argha Ghosh</span><br />
+          Designed<span>           &</span><br />
           Developed by <span>Argha Ghosh</span>
         </p>
       </footer>
@@ -274,7 +306,7 @@ const Footer = () => {
           }
           
           .footer-bottom {
-            text-align: center;
+            text-align: left;
           }
           
           .btn-container {

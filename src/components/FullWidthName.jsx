@@ -175,7 +175,7 @@ const FullWidthName = () => {
           font-size: 10vw;
           color: #ffffff;
           text-transform: uppercase;
-          letter-spacing: 0.01em;
+          letter-spacing: -0.07em;
           white-space: pre;
           margin: 0;
           padding: 0.3em 0 0 0;
@@ -224,9 +224,7 @@ const FullWidthName = () => {
           left: 0;
           right: 0;
           bottom: 0;
-          color:black;
-          -webkit-text-stroke: 2px white;
-          text-stroke: 2px white;
+          color: beige;
           z-index: -1;
           pointer-events: none;
           opacity: 0;

@@ -178,7 +178,7 @@ const FullWidthName = () => {
           letter-spacing: -0.07em;
           white-space: pre;
           margin: 0;
-          padding: 0.3em 0 0 0;
+          padding: 0;
           width: 100%;
           text-align: center;
           position: relative;

@@ -266,8 +266,8 @@ const FullWidthName = () => {
           padding: 15px 40px;
           font-size: 1rem;
           font-weight: 600;
-          color: white;
-          background-color: black;
+          color: black;
+          background-color: white;
           border: 1px solid white;
           border-radius: 50px;
           cursor: pointer;
@@ -285,8 +285,8 @@ const FullWidthName = () => {
         }
 
         .explore-btn:hover {
-          color: black;
-          background-color: white;
+          color: white;
+          background-color: black;
           transform: translateY(-3px);
           box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }

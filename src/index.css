@@ -146,8 +146,8 @@ body, nav {
   position: relative;
   display: inline-block;
   padding: 0.5rem 1.5rem;
-  border: 1px solid #fff;
-  background-color: #000;
+  border: 1px solid #ffffff;
+  background-color: #ffffff;
   border-radius: 25px; /* Rounded corners */
   overflow: hidden;
   text-decoration: none;
@@ -162,7 +162,7 @@ body, nav {
   font-size: 0.9rem;
   letter-spacing: 1px;
   /* background-color: #000; */
-  color: #fff;
+  color: #000000;
 }
 
 .button-hover {
@@ -171,7 +171,7 @@ body, nav {
   left: -100%;
   width: 100%;
   height: 100%;
-  background-color: #fff;
+  background-color: #000000;
   transition: left 0.4s cubic-bezier(0.8, 0, 0.2, 1);
   z-index: 1;
   border-radius: 24px; /* Match parent border-radius */
@@ -182,7 +182,7 @@ body, nav {
 }
 
 .contact-button:hover .button-text {
-  color: #000;
+  color: #ffffff;
 }
 
 /* Responsive Styles */

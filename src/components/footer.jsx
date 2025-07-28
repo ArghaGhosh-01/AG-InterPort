@@ -244,10 +244,10 @@ const Footer = () => {
 
         /* Buttons style */
         .social-btn {
-          background: black;
+          background: white;
           border: 1.5px solid #eee;
           border-radius: 9999px;
-          color: #eee;
+          color: black;
           font-weight: 600;
           padding: 0.5rem 1.8rem;
           font-size: clamp(0.75rem, 0.9vw, 1rem);
@@ -257,8 +257,8 @@ const Footer = () => {
         }
         .social-btn:hover,
         .social-btn:focus {
-          background-color: #eee;
-          color: #000;
+          background-color: black;
+          color: white;
           outline: none;
         }
 

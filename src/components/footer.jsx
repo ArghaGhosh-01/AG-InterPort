@@ -122,7 +122,7 @@ const Footer = () => {
           <button className="social-btn" type="button" onClick={() => openLink('https://www.linkedin.com/in/argha-ghosh-94496a226/')}>
             LINKEDIN
           </button>
-          <button className="social-btn" type="button" onClick={() => openLink('https://x.com/Argha7417')}>
+          <button className="social-btn" type="button" onClick={() => openLink('https://x.com/arghaUXDev')}>
             X
           </button>
         </div>

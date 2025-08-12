@@ -224,7 +224,7 @@ const FullWidthName = () => {
           left: 0;
           right: 0;
           bottom: 0;
-          color: beige;
+          color: white;
           z-index: -1;
           pointer-events: none;
           opacity: 0;

@@ -103,6 +103,13 @@ body, nav {
   height: 30px;
 }
 
+/* Hide cursor on touch devices and smaller screens */
+@media (hover: none) or (pointer: coarse) or (max-width: 1024px) {
+  .custom-cursor {
+    display: none !important;
+  }
+}
+
 
 
 

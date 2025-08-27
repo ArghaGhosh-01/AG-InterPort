@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { motion, useInView } from 'framer-motion';
 import Chocolate from "../assets/Chocolate.png";
-import MetroFlow from "../assets/MetroFlow.jpg";
+import MetroFlow from "../assets/MetroFlow.png";
 
 const Projects = () => {
   const sectionRef = useRef(null);

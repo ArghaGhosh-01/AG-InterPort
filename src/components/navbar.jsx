@@ -22,7 +22,7 @@ const Navbar = () => {
   }, []);
 
   const handleContactClick = () => {
-    window.location.href = 'mailto:argha7417@gmail.com';
+    window.location.href = 'mailto:argha.uxdev@gmail.com';
   };
 
   return (

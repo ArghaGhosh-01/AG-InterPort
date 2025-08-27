@@ -113,7 +113,7 @@ const Footer = () => {
         </p>
         <h1 className="headline" aria-label="Let's Talk">
           <span className="headline-line">LET'S</span>
-          <span className="headline-line">TALK</span>
+          <span className="headline-line">TALK !</span>
         </h1>
         <div className="btn-container" role="navigation" aria-label="Social links">
           <button className="social-btn" type="button" onClick={() => openLink('https://github.com/ArghaGhosh-01')}>

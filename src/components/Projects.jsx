@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { motion, useInView } from 'framer-motion';
 import Chocolate from "../assets/Chocolate.png";
+import MetroFlow from "../assets/MetroFlow.jpg";
 
 const Projects = () => {
   const sectionRef = useRef(null);
@@ -23,7 +24,7 @@ const Projects = () => {
     {
       id: 2,
       width: "narrow",
-      bgImage: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      bgImage:MetroFlow ,
       link: "#"
     },
     {
@@ -35,7 +36,7 @@ const Projects = () => {
     {
       id: 4,
       width: "wide",
-      bgImage: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+      bgImage:MetroFlow ,
       link: "#"
     },
     {

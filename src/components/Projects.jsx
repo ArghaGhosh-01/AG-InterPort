@@ -25,7 +25,7 @@ const Projects = () => {
       id: 2,
       width: "narrow",
       bgImage:MetroFlow ,
-      link: "#"
+      link: "https://github.com/ArghaGhosh-01/MetroFlow"
     },
     {
       id: 3,
@@ -37,7 +37,7 @@ const Projects = () => {
       id: 4,
       width: "wide",
       bgImage:MetroFlow ,
-      link: "#"
+      link: "https://github.com/ArghaGhosh-01/MetroFlow"
     },
     {
       id: 5,

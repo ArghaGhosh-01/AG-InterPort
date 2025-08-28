@@ -6,7 +6,7 @@ import MetroFlow from "../assets/MetroFlow.png";
 
 const Projects = () => {
   const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: false, amount: 0.2 });
+  const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
   const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 });
   const [isHovering, setIsHovering] = useState(false);
 
@@ -24,7 +24,7 @@ const Projects = () => {
     {
       id: 2,
       width: "narrow",
-      bgImage:MetroFlow ,
+      bgImage: MetroFlow,
       link: "https://github.com/ArghaGhosh-01/MetroFlow"
     },
     {
@@ -36,7 +36,7 @@ const Projects = () => {
     {
       id: 4,
       width: "wide",
-      bgImage:MetroFlow ,
+      bgImage: MetroFlow,
       link: "https://github.com/ArghaGhosh-01/MetroFlow"
     },
     {
@@ -83,7 +83,7 @@ const Projects = () => {
                 key={`h1-${i}`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ delay: i * 0.02, type: "spring" }}
+                transition={{ delay: i * 0.02, type: "spring", stiffness: 100 }}
               >
                 {char}
               </motion.span>
@@ -96,7 +96,7 @@ const Projects = () => {
                 key={`h2-${i}`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ delay: (i + heading1.length) * 0.02, type: "spring" }}
+                transition={{ delay: (i + heading1.length) * 0.02, type: "spring", stiffness: 100 }}
               >
                 {char}
               </motion.span>
@@ -152,7 +152,7 @@ const Projects = () => {
 const ProjectsContainer = styled(motion.section)`
   max-width: 1200px;
   margin: 15vh auto;
-  padding: 0 1.5rem;
+  padding: 1rem 2.2rem;
   color: #fff;
   font-family: 'Helvetica Neue', sans-serif;
   overflow: hidden;

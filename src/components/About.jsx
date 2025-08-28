@@ -133,7 +133,7 @@ const About = () => {
 const AboutContainer = styled(motion.section)`
   max-width: 1200px;
   margin: 15vh auto;
-  padding: 0 1.5rem;
+  padding: 1rem 2.2rem;
   color: #fff;
   font-family: 'Helvetica Neue', sans-serif;
   overflow: hidden;

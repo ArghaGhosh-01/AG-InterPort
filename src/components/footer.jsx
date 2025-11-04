@@ -1,28 +1,28 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 
 const Footer = () => {
   // Function to open social links
   const openLink = (url) => {
-    window.open(url, '_blank', 'noopener,noreferrer');
+    window.open(url, "_blank", "noopener,noreferrer");
   };
 
   // Function for smooth scroll to top
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   // Scramble effect implementation
   const footerRef = useRef(null);
   const scrambleRef = useRef(null);
-  const [scrambledText, setScrambledText] = useState('');
+  const [scrambledText, setScrambledText] = useState("");
   const originalText = "HAVE A PROJECT IN MIND?";
   const chars = "abcdefghi!<>-_\\/[]{}—=+*^?#__________";
 
   const animateScramble = (targetText, speed) => {
     let iterations = 0;
     const interval = setInterval(() => {
-      setScrambledText(prev => {
-        let output = '';
+      setScrambledText((prev) => {
+        let output = "";
         for (let i = 0; i < targetText.length; i++) {
           if (i < iterations) {
             output += targetText[i];
@@ -40,12 +40,12 @@ const Footer = () => {
 
   const resetAndAnimate = () => {
     // First reset to scrambled state
-    let initialScramble = '';
+    let initialScramble = "";
     for (let i = 0; i < originalText.length; i++) {
       initialScramble += chars[Math.floor(Math.random() * chars.length)];
     }
     setScrambledText(initialScramble);
-    
+
     // Then animate to original
     setTimeout(() => {
       animateScramble(originalText, 30);
@@ -63,7 +63,7 @@ const Footer = () => {
     // Set up Intersection Observer to trigger animation when footer comes into view
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach(entry => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
             resetAndAnimate();
           }
@@ -91,38 +91,57 @@ const Footer = () => {
         <div aria-label="copyright notice" role="contentinfo">
           © {new Date().getFullYear()}
         </div>
-        <button 
-          aria-label="Back to top" 
-          className="back-to-top" 
+        <button
+          aria-label="Back to top"
+          className="back-to-top"
           onClick={scrollToTop}
           type="button"
         >
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+            focusable="false"
+          >
             <path d="M12 16V8M12 8L8 12M12 8L16 12" />
           </svg>
         </button>
       </header>
 
       <main className="footer-main-content">
-        <p 
-          className="intro-text" 
-          ref={scrambleRef}
-          onMouseEnter={handleHover}
-        >
+        <p className="intro-text" ref={scrambleRef} onMouseEnter={handleHover}>
           {scrambledText}
         </p>
         <h1 className="headline" aria-label="Let's Talk">
           <span className="headline-line">LET'S</span>
           <span className="headline-line">TALK !</span>
         </h1>
-        <div className="btn-container" role="navigation" aria-label="Social links">
-          <button className="social-btn" type="button" onClick={() => openLink('https://github.com/ArghaGhosh-01')}>
+        <div
+          className="btn-container"
+          role="navigation"
+          aria-label="Social links"
+        >
+          <button
+            className="social-btn"
+            type="button"
+            onClick={() => openLink("https://github.com/ArghaGhosh-01")}
+          >
             GITHUB
           </button>
-          <button className="social-btn" type="button" onClick={() => openLink('https://www.linkedin.com/in/argha-ghosh-94496a226/')}>
+          <button
+            className="flex social-btn"
+            type="button"
+            onClick={() =>
+              openLink("https://www.linkedin.com/in/argha-ghosh-94496a226/")
+            }
+          >
             LINKEDIN
           </button>
-          <button className="social-btn" type="button" onClick={() => openLink('https://x.com/arghaUXDev')}>
+          <button
+            className="social-btn"
+            type="button"
+            onClick={() => openLink("https://x.com/arghaUXDev")}
+          >
             X
           </button>
         </div>
@@ -130,7 +149,8 @@ const Footer = () => {
 
       <footer className="footer-bottom">
         <p>
-          Designed<span>           &</span><br />
+          Designed<span> &</span>
+          <br />
           Developed by <span>Argha Ghosh</span>
         </p>
       </footer>
@@ -141,7 +161,7 @@ const Footer = () => {
           margin: 0;
           background: transparent;
           color: #eee;
-          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
           line-height: 1.4;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
@@ -177,7 +197,8 @@ const Footer = () => {
           font-size: 1.25rem;
           transition: background-color 0.3s ease;
         }
-        .back-to-top:hover, .back-to-top:focus {
+        .back-to-top:hover,
+        .back-to-top:focus {
           background: #444;
           outline: none;
         }
@@ -287,7 +308,7 @@ const Footer = () => {
             -webkit-text-stroke: 2px #eee;
             text-stroke: 2px #eee;
           }
-          
+
           .headline-line {
             display: block;
             white-space: nowrap;
@@ -298,17 +319,17 @@ const Footer = () => {
           .footer-container {
             padding: 1rem;
           }
-          
+
           .headline {
             font-size: clamp(2.5rem, 18vw, 6rem);
             -webkit-text-stroke: 1.5px #eee;
             text-stroke: 1.5px #eee;
           }
-          
+
           .footer-bottom {
             text-align: left;
           }
-          
+
           .btn-container {
             justify-content: center;
           }

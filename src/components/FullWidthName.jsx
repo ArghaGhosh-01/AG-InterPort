@@ -122,7 +122,7 @@ const FullWidthName = () => {
       e.currentTarget.classList.remove('clicked');
     }, 500);
     setTimeout(() => {
-      window.open('https://drive.google.com/file/d/1BlPIvhSgcrdGe4CXLfh82sjSeEs-sgBU/view?usp=sharing', '_blank');
+      window.open("https://drive.google.com/file/d/1ShvoQpgAFyedu11j__Uek1nj7rxRgdxk/view?usp=sharing", '_blank');
     }, 300);
   };
 
